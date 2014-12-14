@@ -222,9 +222,14 @@ if ( !class_exists('phpFlickr') ) {
 			if ( function_exists('curl_init') ) {
 				// Has curl. Use it!
 				$curl = curl_init($this->rest_endpoint);
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+				curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);				
 				curl_setopt($curl, CURLOPT_POST, true);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				$response = curl_exec($curl);
 				curl_close($curl);
 			} else {
